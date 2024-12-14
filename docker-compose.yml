@@ -30,9 +30,9 @@ services:
     restart: unless-stopped
     container_name: flowise
     environment:
-        - PORT=3001
+        - PORT=3002
     ports:
-        - 3001:3001
+        - 3001:3002
     extra_hosts:
       - "host.docker.internal:host-gateway"        
     volumes:
@@ -45,7 +45,7 @@ services:
     restart: unless-stopped
     container_name: open-webui
     ports:
-      - "3000:8080"
+      - "3000:8083"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
@@ -87,7 +87,7 @@ services:
     container_name: n8n
     restart: unless-stopped
     ports:
-      - 5678:5678
+      - 5678:5679
     volumes:
       - n8n_storage:/home/node/.n8n
       - ./n8n/backup:/backup
