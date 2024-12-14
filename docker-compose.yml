@@ -84,7 +84,7 @@ services:
 
   n8n:
     <<: *service-n8n
-    container_name: n8n
+    container_name: n8n-flowise
     restart: unless-stopped
     ports:
       - 5678:5679
