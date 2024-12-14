@@ -10,7 +10,7 @@ networks:
 
 x-n8n: &service-n8n
   image: n8nio/n8n:latest
-  networks: ['demo']
+  networks: ['flowise']
   environment:
     - DB_TYPE=postgresdb
     - DB_POSTGRESDB_HOST=postgres
@@ -26,7 +26,7 @@ x-n8n: &service-n8n
 services:
   flowise:
     image: flowiseai/flowise
-    networks: ['demo']
+    networks: ['flowise']
     restart: unless-stopped
     container_name: flowise
     environment:
