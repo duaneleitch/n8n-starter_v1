@@ -4,6 +4,8 @@ volumes:
   qdrant_storage:
   open-webui:
   flowise:
+  supabase_storage:
+  ollama_data:
 
 networks:
   flowise:
@@ -103,6 +105,38 @@ services:
     container_name: qdrant
     networks: ['flowise']
     restart: unless-stopped
+    ports:
+      - 6333:6333
+    volumes:
+      - qdrant_storage:/qdrant/storage
+
+  supabase:
+    image: supabase/supabase-docker:latest
+    container_name: supabase
+    networks: ['flowise']
+    restart: unless-stopped
+    ports:
+      - "8000:8000" # API 
+      - "5432:5432" # Database 
+      - "9999:9999" # Studio 
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      ANON_KEY: ${ANON_KEY}
+      SERVICE_ROLE_KEY: ${SERVICE_ROLE_KEY}
+    volumes:
+      - supabase_storage:/var/lib/postgresql/data
+
+  ollama:
+    image: ollama/ollama:${OLLAMA_DOCKER_TAG-latest}
+    container_name: ollama
+    networks: ['flowise']
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+
     ports:
       - 6333:6333
     volumes:
